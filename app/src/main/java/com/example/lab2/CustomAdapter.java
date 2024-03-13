@@ -18,16 +18,14 @@ import java.util.ArrayList;
 public class CustomAdapter extends ArrayAdapter<Model> {
     ArrayList<Model> modelArrayList;
     Context context;
-    public CheckBoxCheckedListener checkBoxCheckedListener;
+
     public CustomAdapter(ArrayList<Model> modelArrayList, Context context) {
         super(context, R.layout.list_view, modelArrayList);
         this.modelArrayList = modelArrayList;
         this.context = context;
     }
 
-    public void setCheckBoxCheckedListener(CheckBoxCheckedListener checkBoxCheckedListener) {
-        this.checkBoxCheckedListener = checkBoxCheckedListener;
-    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -46,19 +44,12 @@ public class CustomAdapter extends ArrayAdapter<Model> {
         viewHolder.nameText.setText(modelArrayList.get(position).getName());
         viewHolder.phoneNumberText.setText(modelArrayList.get(position).getPhoneNumber());
         viewHolder.imageView.setImageURI(modelArrayList.get(position).getFilePath());
-        viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(checkBoxCheckedListener != null) {
-                    checkBoxCheckedListener.getCheckBoxCheckedListener(position);
-                }
-            }
-        });
+
         return  view ;
     }
 
     private static class ViewHolder  {
-        CheckBox checkBox;
+
         TextView nameText;
         TextView phoneNumberText;
         ImageView imageView;
@@ -67,14 +58,12 @@ public class CustomAdapter extends ArrayAdapter<Model> {
         ViewHolder(View view) {
             nameText = (TextView) view.findViewById(R.id.name);
             phoneNumberText = (TextView) view.findViewById(R.id.phoneNumber);
-            checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+
             imageView = (ImageView) view.findViewById(R.id.imageListView);
         }
     }
 
-    public interface CheckBoxCheckedListener{
-        void getCheckBoxCheckedListener(int position);
-    }
+
 
 
 }

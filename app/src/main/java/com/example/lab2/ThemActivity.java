@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import java.io.InputStream;
 public class ThemActivity extends AppCompatActivity {
     EditText nameText, phoneNumberText;
     Button btnThoat, btnThem, btnThemAnh;
+    public static final String TAG = "tag";
     private ActivityResultLauncher<Intent> imageLauncher;
     ImageView imageView;
     Uri ImageUri ;
@@ -44,11 +46,12 @@ public class ThemActivity extends AppCompatActivity {
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checked() == true) {
+                if(checked()) {
                     Intent intent = new Intent(ThemActivity.this, MainActivity.class);
                     intent.putExtra("name", nameText.getText().toString());
                     intent.putExtra("phone", phoneNumberText.getText().toString());
                     intent.putExtra("filePath", ImageUri) ;
+                    intent.putExtra("flag", 1);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
@@ -82,7 +85,7 @@ public class ThemActivity extends AppCompatActivity {
             phoneNumberText.setError("không được để trống");
             return false;
         }
-        if(phoneNumberText.length() == 10 ) {
+        if(phoneNumberText.length() > 10 ) {
             phoneNumberText.setError("số đt phải bằng 10");
             return false;
         }
